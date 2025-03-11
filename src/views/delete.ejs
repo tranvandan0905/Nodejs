@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Update</title>
+</head>
+
+<body>
+    <div class="topnav">
+        <a class="active" href="/">Home</a>
+        <a href="/create">Craete User</a>
+        <a href="#contact">Contact</a>
+        <a href="#about">About</a>
+    </div>
+    <div class="form-add-new">
+        <form action="/delete-user" method="POST">
+            <fieldset>
+                <input type="text" name="id" value="<%= user.id %>" hidden>
+                <legend>Delete a User</legend>
+                <div class="input-group">
+                    <label for="">Email:</label>
+                    <input name="email" value="<%= user.email %>" type="text" readonly>
+                </div>
+
+                <div>
+                    <Button>Delete user</Button>
+                </div>
+            </fieldset>
+
+        </form>
+
+    </div>
+
+</body>
+
+</html>
