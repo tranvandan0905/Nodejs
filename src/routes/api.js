@@ -1,0 +1,21 @@
+const express = require("express");
+const { upfileAPI, getUserAPI, postCreateuserAPI, putUpdateuserAPI, DeleteuserAPI, upfilesAPI } = require('../controllers/apiControllers');
+const { postCreateCustomentAPI, postCreateArrayCustomentAPI, getALLCustomentAPI, putCustomentAPI, deleteCustomentAPI } = require('../controllers/customenrController')
+const { getAllProject, postprojectAPI, deleteprojectAPI } = require('../controllers/projectController');
+const router = require("./web");
+const routerAPI = express.Router();
+routerAPI.get('/user', getUserAPI);
+routerAPI.post('/user', postCreateuserAPI);
+routerAPI.put('/user', putUpdateuserAPI);
+routerAPI.delete('/user', DeleteuserAPI);
+routerAPI.post('/file', upfileAPI);
+routerAPI.post('/files', upfilesAPI);
+routerAPI.post('/customents', postCreateCustomentAPI);
+routerAPI.post('/customents-many', postCreateArrayCustomentAPI);
+routerAPI.get('/customents', getALLCustomentAPI);
+routerAPI.put('/customents', putCustomentAPI);
+routerAPI.delete('/customents', deleteCustomentAPI);
+routerAPI.get('/project', getAllProject);
+routerAPI.post('/project', postprojectAPI);
+routerAPI.delete('/project', deleteprojectAPI);
+module.exports = routerAPI;

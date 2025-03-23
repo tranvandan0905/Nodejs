@@ -1,7 +1,7 @@
 const connection = require('../config/database')
-const { getALLUser, getUpdateIDUser, postUpdateIDUser, getDeleteIDUser } = require('../services/CRUDservices')
+const User = require('../models/user')
 const getHomspage = async (req, res) => {
-    let results = await getALLUser() // await la chay dong nay ms chay dong sau
+    const results =await User.find({});
     return res.render('home.ejs', { listuser: results })
 }
 const getCreateuser = (req, res) => {
@@ -12,14 +12,18 @@ const postCreateuser = async (req, res) => {
     let email = req.body.email;
     let name = req.body.myname;
     let city = req.body.city;
-    let [results, sields] = await connection.query(
-        ` INSERT INTO Users (email,name,city)VALUES (?, ?, ?) `, [email, name, city])
 
+    await User.create({
+        email: email,
+        name: name,
+        city: city
+    })
 
+    res.redirect('/')
 }
 const getedit = async (req, res) => {
-    const idUser = req.params.id;
-    let results = await getUpdateIDUser(idUser);
+    const idUser = req.params.id.trim();
+    let results = await User.findById(idUser).exec();
     return res.render('edituser.ejs', { edituser: results })
 }
 const postUpdateuser = async (req, res) => {
@@ -27,20 +31,21 @@ const postUpdateuser = async (req, res) => {
     let name = req.body.myname;
     let city = req.body.city;
     let id = req.body.id;
-    postUpdateIDUser(id, email, city, name)
+    await User.updateOne({ _id: id }, { email: email, name: name, city: city });
     res.redirect('/')
 }
 const getdeleteuser = async (req, res) => {
-    const idUser = req.params.id;
-    let results = await getUpdateIDUser(idUser);
+    const idUser = req.params.id.trim();
+    let results = await User.findById(idUser).exec();
     return res.render('delete.ejs', { user: results });
 }
 const getRemoveUser = async (req, res) => {
     const idUser = req.body.id;
-    await getDeleteIDUser(idUser);
-    console.log('ok',idUser)
-    // res.redirect('/')
+    await User.deleteOne({ _id: idUser });
+    res.redirect('/')
 }
+
+
 module.exports = {
     getHomspage,
     getCreateuser,
@@ -48,5 +53,6 @@ module.exports = {
     postUpdateuser,
     getdeleteuser,
     getRemoveUser,
+
     getedit
 }

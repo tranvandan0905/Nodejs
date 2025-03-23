@@ -8,4 +8,5 @@ router.post('/create-user', postCreateuser);
 router.post('/Update-user', postUpdateuser);
 router.get('/delete:id',getdeleteuser);
 router.post('/delete-user',getRemoveUser);
+
 module.exports = router;
